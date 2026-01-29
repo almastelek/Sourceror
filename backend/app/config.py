@@ -4,16 +4,21 @@ Configuration management for Agentic Buyer backend.
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
     
     # Best Buy API
-    bestbuy_api_key: str = ""
+    bestbuy_api_key: str = os.getenv("BESTBUY_API_KEY")
     
     # eBay API
-    ebay_client_id: str = ""
-    ebay_client_secret: str = ""
+    ebay_client_id: str = os.getenv("EBAY_CLIENT_ID")
+    ebay_client_secret: str = os.getenv("EBAY_CLIENT_SECRET")
     
     # Database
     database_url: str = "postgresql://postgres:postgres@localhost:5432/agentic_buyer"
