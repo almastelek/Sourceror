@@ -8,11 +8,11 @@ interface ScoreBreakdownProps {
 }
 
 const SCORE_CONFIG = {
-    price: { label: "Price", color: "bg-emerald-500", icon: "💰" },
-    delivery: { label: "Delivery", color: "bg-blue-500", icon: "🚚" },
-    reliability: { label: "Reliability", color: "bg-purple-500", icon: "⭐" },
-    warranty: { label: "Warranty", color: "bg-orange-500", icon: "🛡️" },
-    spec_match: { label: "Specs", color: "bg-pink-500", icon: "🎯" },
+    price: { label: "Price", color: "bg-emerald-500", icon: "" },
+    delivery: { label: "Delivery", color: "bg-blue-500", icon: "" },
+    reliability: { label: "Reliability", color: "bg-purple-500", icon: "" },
+    warranty: { label: "Warranty", color: "bg-orange-500", icon: "" },
+    spec_match: { label: "Specs", color: "bg-pink-500", icon: "" },
 };
 
 export default function ScoreBreakdown({ scores, showLabels = true }: ScoreBreakdownProps) {
