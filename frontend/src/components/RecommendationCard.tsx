@@ -5,169 +5,158 @@ import ScoreBreakdown from "./ScoreBreakdown";
 import Image from "next/image";
 
 interface RecommendationCardProps {
-    recommendation: Recommendation;
+  recommendation: Recommendation;
 }
 
-const LABEL_CONFIG: Record<RecommendationLabel, { title: string; color: string; gradient: string; icon: string }> = {
-    overall: {
-        title: "Best Overall",
-        color: "text-cyan-400",
-        gradient: "from-cyan-500/20 to-blue-500/20",
-        icon: "🏆",
-    },
-    value: {
-        title: "Best Value",
-        color: "text-emerald-400",
-        gradient: "from-emerald-500/20 to-green-500/20",
-        icon: "💎",
-    },
-    low_risk: {
-        title: "Lowest Risk",
-        color: "text-purple-400",
-        gradient: "from-purple-500/20 to-pink-500/20",
-        icon: "🛡️",
-    },
+const LABEL_CONFIG: Record<
+  RecommendationLabel,
+  { title: string; color: string; borderColor: string }
+> = {
+  overall: {
+    title: "Best overall",
+    color: "text-amber-400/90",
+    borderColor: "border-amber-500/20",
+  },
+  value: {
+    title: "Best value",
+    color: "text-zinc-300",
+    borderColor: "border-zinc-600/50",
+  },
+  low_risk: {
+    title: "Lowest risk",
+    color: "text-zinc-400",
+    borderColor: "border-zinc-600/50",
+  },
 };
 
 const SOURCE_CONFIG = {
-    bestbuy: { name: "Best Buy", color: "text-yellow-400", bg: "bg-yellow-500/10" },
-    ebay: { name: "eBay", color: "text-blue-400", bg: "bg-blue-500/10" },
+  bestbuy: { name: "Best Buy", pill: "bg-zinc-700/50 text-zinc-400" },
+  ebay: { name: "eBay", pill: "bg-zinc-700/50 text-zinc-400" },
 };
 
 export default function RecommendationCard({ recommendation }: RecommendationCardProps) {
-    const { label, listing, scores, total_score, why, tradeoff } = recommendation;
-    const labelConfig = LABEL_CONFIG[label];
-    const sourceConfig = SOURCE_CONFIG[listing.source];
+  const { label, listing, scores, total_score, why, tradeoff } = recommendation;
+  const labelConfig = LABEL_CONFIG[label];
+  const sourceConfig = SOURCE_CONFIG[listing.source];
 
-    return (
-        <div
-            className={`relative rounded-2xl border border-slate-700/50 bg-gradient-to-br ${labelConfig.gradient} 
-                  backdrop-blur-sm overflow-hidden hover:border-slate-600 transition-all duration-300
-                  hover:shadow-lg hover:shadow-slate-900/50`}
+  return (
+    <div
+      className={`rounded-xl border ${labelConfig.borderColor} bg-zinc-900/60 overflow-hidden hover:border-zinc-600/50 transition-colors`}
+    >
+      <div className="flex items-start justify-between gap-3 px-4 pt-4 pb-2">
+        <span
+          className={`text-xs font-medium ${labelConfig.color}`}
         >
-            {/* Label Badge */}
-            <div className="absolute top-4 left-4 z-10">
-                <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-sm`}>
-                    <span>{labelConfig.icon}</span>
-                    <span className={`text-sm font-semibold ${labelConfig.color}`}>{labelConfig.title}</span>
-                </div>
-            </div>
-
-            {/* Total Score Badge */}
-            <div className="absolute top-4 right-4 z-10">
-                <div className="px-3 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-sm">
-                    <span className="text-lg font-bold text-white">{Math.round(total_score * 100)}</span>
-                    <span className="text-xs text-slate-400">/100</span>
-                </div>
-            </div>
-
-            {/* Product Image */}
-            <div className="h-48 bg-slate-800/50 flex items-center justify-center overflow-hidden">
-                {listing.image_url ? (
-                    <Image
-                        src={listing.image_url}
-                        alt={listing.title}
-                        width={200}
-                        height={200}
-                        className="max-h-full w-auto object-contain"
-                        unoptimized
-                    />
-                ) : (
-                    <div className="text-6xl opacity-30">🎧</div>
-                )}
-            </div>
-
-            {/* Content */}
-            <div className="p-5 space-y-4">
-                {/* Title & Source */}
-                <div>
-                    <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs ${sourceConfig.bg} ${sourceConfig.color} mb-2`}>
-                        {sourceConfig.name}
-                    </div>
-                    <h3 className="text-lg font-semibold text-white line-clamp-2 leading-snug">
-                        {listing.title}
-                    </h3>
-                </div>
-
-                {/* Price & Shipping */}
-                <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-bold text-white">${listing.total_cost.toFixed(2)}</span>
-                    {listing.shipping_cost !== null && listing.shipping_cost > 0 && (
-                        <span className="text-sm text-slate-400">
-                            (${listing.price.toFixed(2)} + ${listing.shipping_cost.toFixed(2)} shipping)
-                        </span>
-                    )}
-                    {listing.shipping_cost === 0 && (
-                        <span className="text-sm text-emerald-400">Free shipping</span>
-                    )}
-                </div>
-
-                {/* Details Row */}
-                <div className="flex flex-wrap gap-3 text-sm">
-                    {listing.condition && (
-                        <span className="px-2 py-1 rounded bg-slate-700/50 text-slate-300 capitalize">
-                            {listing.condition}
-                        </span>
-                    )}
-                    {listing.eta_max_days && (
-                        <span className="px-2 py-1 rounded bg-slate-700/50 text-slate-300">
-                            📦 {listing.eta_min_days || listing.eta_max_days}-{listing.eta_max_days} days
-                        </span>
-                    )}
-                    {listing.seller_rating && (
-                        <span className="px-2 py-1 rounded bg-slate-700/50 text-slate-300">
-                            ⭐ {listing.seller_rating.toFixed(1)}%
-                        </span>
-                    )}
-                    {listing.warranty_months && (
-                        <span className="px-2 py-1 rounded bg-slate-700/50 text-slate-300">
-                            🛡️ {listing.warranty_months}mo warranty
-                        </span>
-                    )}
-                    {listing.return_window_days && (
-                        <span className="px-2 py-1 rounded bg-slate-700/50 text-slate-300">
-                            ↩️ {listing.return_window_days}d returns
-                        </span>
-                    )}
-                </div>
-
-                {/* Score Breakdown */}
-                <div className="pt-2 border-t border-slate-700/50">
-                    <ScoreBreakdown scores={scores} />
-                </div>
-
-                {/* Why This Pick */}
-                <div className="space-y-2">
-                    <h4 className="text-sm font-medium text-slate-300">Why this pick:</h4>
-                    <ul className="space-y-1">
-                        {why.map((reason, i) => (
-                            <li key={i} className="flex items-start gap-2 text-sm text-slate-400">
-                                <span className="text-emerald-400">✓</span>
-                                <span>{reason}</span>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-
-                {/* Tradeoff */}
-                <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                    <div className="flex items-start gap-2 text-sm">
-                        <span className="text-amber-400">⚠️</span>
-                        <span className="text-amber-200">{tradeoff}</span>
-                    </div>
-                </div>
-
-                {/* View Link */}
-                <a
-                    href={listing.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full py-2.5 text-center text-sm font-medium text-white 
-                     bg-slate-700/50 hover:bg-slate-600/50 rounded-lg transition-colors"
-                >
-                    View on {sourceConfig.name} →
-                </a>
-            </div>
+          {labelConfig.title}
+        </span>
+        <div className="text-right">
+          <span className="text-lg font-semibold text-zinc-100 tabular-nums">
+            {Math.round(total_score * 100)}
+          </span>
+          <span className="text-xs text-zinc-500">/100</span>
         </div>
-    );
+      </div>
+
+      <div className="h-40 bg-zinc-800/40 flex items-center justify-center overflow-hidden">
+        {listing.image_url ? (
+          <Image
+            src={listing.image_url}
+            alt={listing.title}
+            width={200}
+            height={200}
+            className="max-h-full w-auto object-contain"
+            unoptimized
+          />
+        ) : (
+          <div className="w-12 h-12 rounded-full bg-zinc-700/50" aria-hidden />
+        )}
+      </div>
+
+      <div className="p-4 space-y-4">
+        <div>
+          <span
+            className={`inline-block px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wide ${sourceConfig.pill} mb-2`}
+          >
+            {sourceConfig.name}
+          </span>
+          <h3 className="text-sm font-medium text-zinc-200 line-clamp-2 leading-snug">
+            {listing.title}
+          </h3>
+        </div>
+
+        <div className="flex items-baseline gap-2">
+          <span className="text-xl font-semibold text-zinc-100 tabular-nums">
+            ${listing.total_cost.toFixed(2)}
+          </span>
+          {listing.shipping_cost !== null && listing.shipping_cost > 0 && (
+            <span className="text-xs text-zinc-500">
+              + ${listing.shipping_cost.toFixed(2)} ship
+            </span>
+          )}
+          {listing.shipping_cost === 0 && (
+            <span className="text-xs text-zinc-500">Free shipping</span>
+          )}
+        </div>
+
+        <div className="flex flex-wrap gap-2 text-xs text-zinc-500">
+          {listing.condition && (
+            <span className="px-2 py-0.5 rounded bg-zinc-800 capitalize">
+              {listing.condition}
+            </span>
+          )}
+          {listing.eta_max_days != null && (
+            <span className="px-2 py-0.5 rounded bg-zinc-800">
+              {listing.eta_min_days ?? listing.eta_max_days}–{listing.eta_max_days} days
+            </span>
+          )}
+          {listing.seller_rating != null && (
+            <span className="px-2 py-0.5 rounded bg-zinc-800">
+              {listing.seller_rating.toFixed(0)}% seller
+            </span>
+          )}
+          {listing.warranty_months != null && (
+            <span className="px-2 py-0.5 rounded bg-zinc-800">
+              {listing.warranty_months}mo warranty
+            </span>
+          )}
+          {listing.return_window_days != null && (
+            <span className="px-2 py-0.5 rounded bg-zinc-800">
+              {listing.return_window_days}d returns
+            </span>
+          )}
+        </div>
+
+        <div className="pt-3 border-t border-zinc-800">
+          <ScoreBreakdown scores={scores} />
+        </div>
+
+        <div className="space-y-1.5">
+          <h4 className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">
+            Why this pick
+          </h4>
+          <ul className="space-y-1">
+            {why.map((reason, i) => (
+              <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
+                <span className="text-amber-500/80 mt-0.5 shrink-0">·</span>
+                <span>{reason}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="p-2.5 rounded-lg bg-amber-950/20 border border-amber-900/30">
+          <p className="text-xs text-amber-200/80">{tradeoff}</p>
+        </div>
+
+        <a
+          href={listing.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full py-2 text-center text-xs font-medium text-zinc-200 bg-zinc-800 hover:bg-zinc-700 rounded-lg transition-colors"
+        >
+          View on {sourceConfig.name}
+        </a>
+      </div>
+    </div>
+  );
 }
