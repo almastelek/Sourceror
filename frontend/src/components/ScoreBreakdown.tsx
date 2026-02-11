@@ -11,7 +11,7 @@ const SCORE_CONFIG: Record<
   keyof ComponentScores,
   { label: string; barColor: string }
 > = {
-  price: { label: "Price", barColor: "bg-amber-500/70" },
+  price: { label: "Price", barColor: "bg-emerald-500/70" },
   delivery: { label: "Delivery", barColor: "bg-zinc-500" },
   reliability: { label: "Reliability", barColor: "bg-zinc-500" },
   warranty: { label: "Warranty", barColor: "bg-zinc-500" },

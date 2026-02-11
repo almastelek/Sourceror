@@ -62,7 +62,7 @@ export default function InputForm({ onSubmit, isLoading }: InputFormProps) {
   };
 
   const inputClass =
-    "w-full px-3 py-2.5 bg-zinc-800/50 border border-zinc-700 rounded-lg text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-amber-500/50 focus:border-amber-500/50 transition-colors";
+    "w-full px-3 py-2.5 bg-zinc-800/50 border border-zinc-700 rounded-lg text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 focus:border-emerald-500/50 transition-colors";
   const labelClass = "block text-xs font-medium text-zinc-500 mb-1.5";
 
   return (
@@ -84,7 +84,7 @@ export default function InputForm({ onSubmit, isLoading }: InputFormProps) {
 
       <div>
         <label htmlFor="budget" className={labelClass}>
-          Max budget <span className="text-amber-400/90 font-mono">${budgetMax}</span>
+          Max budget <span className="text-emerald-400 font-mono">${budgetMax}</span>
         </label>
         <input
           type="range"
@@ -94,7 +94,7 @@ export default function InputForm({ onSubmit, isLoading }: InputFormProps) {
           step="25"
           value={budgetMax}
           onChange={(e) => setBudgetMax(Number(e.target.value))}
-          className="w-full h-1.5 bg-zinc-700 rounded-full appearance-none cursor-pointer accent-amber-500"
+          className="w-full h-1.5 bg-zinc-700 rounded-full appearance-none cursor-pointer accent-emerald-500"
         />
         <div className="flex justify-between text-[10px] text-zinc-600 mt-1">
           <span>$50</span>
@@ -115,7 +115,7 @@ export default function InputForm({ onSubmit, isLoading }: InputFormProps) {
                 type="checkbox"
                 checked={conditions[key as keyof typeof conditions]}
                 onChange={() => handleConditionChange(key as keyof typeof conditions)}
-                className="w-4 h-4 rounded border-zinc-600 bg-zinc-800 text-amber-500 focus:ring-amber-500/50 focus:ring-offset-0 cursor-pointer"
+                className="w-4 h-4 rounded border-zinc-600 bg-zinc-800 text-emerald-500 focus:ring-emerald-500/50 focus:ring-offset-0 cursor-pointer"
               />
               <span className="text-xs text-zinc-400">{label}</span>
             </label>
@@ -169,7 +169,7 @@ export default function InputForm({ onSubmit, isLoading }: InputFormProps) {
                 step="0.05"
                 value={weights[key]}
                 onChange={(e) => handleWeightChange(key, Number(e.target.value))}
-                className="flex-1 h-1.5 bg-zinc-700 rounded-full appearance-none cursor-pointer accent-amber-500"
+                className="flex-1 h-1.5 bg-zinc-700 rounded-full appearance-none cursor-pointer accent-emerald-500"
               />
               <span className="w-8 text-xs text-zinc-500 font-mono text-right">
                 {(weights[key] * 100).toFixed(0)}%
@@ -182,7 +182,7 @@ export default function InputForm({ onSubmit, isLoading }: InputFormProps) {
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full py-3 px-4 bg-amber-500/90 hover:bg-amber-500 disabled:bg-zinc-700 disabled:text-zinc-500 text-zinc-950 text-sm font-medium rounded-lg transition-colors disabled:cursor-not-allowed"
+        className="w-full py-3 px-4 bg-emerald-500 hover:bg-emerald-400 disabled:bg-zinc-700 disabled:text-zinc-500 text-zinc-950 text-sm font-medium rounded-lg transition-colors disabled:cursor-not-allowed"
       >
         {isLoading ? (
           <span className="flex items-center justify-center gap-2">

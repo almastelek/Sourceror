@@ -17,8 +17,8 @@ const STABILITY_CONFIG: Record<
   },
   medium: {
     label: "Medium stability",
-    color: "text-amber-400/90",
-    border: "border-amber-900/40",
+    color: "text-emerald-400",
+    border: "border-emerald-900/40",
   },
   low: {
     label: "Low stability",

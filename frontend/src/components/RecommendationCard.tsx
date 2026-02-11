@@ -14,8 +14,8 @@ const LABEL_CONFIG: Record<
 > = {
   overall: {
     title: "Best overall",
-    color: "text-amber-400/90",
-    borderColor: "border-amber-500/20",
+    color: "text-emerald-400",
+    borderColor: "border-emerald-500/20",
   },
   value: {
     title: "Best value",
@@ -137,15 +137,15 @@ export default function RecommendationCard({ recommendation }: RecommendationCar
           <ul className="space-y-1">
             {why.map((reason, i) => (
               <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
-                <span className="text-amber-500/80 mt-0.5 shrink-0">·</span>
+                <span className="text-emerald-500/80 mt-0.5 shrink-0">·</span>
                 <span>{reason}</span>
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="p-2.5 rounded-lg bg-amber-950/20 border border-amber-900/30">
-          <p className="text-xs text-amber-200/80">{tradeoff}</p>
+        <div className="p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-900/30">
+          <p className="text-xs text-emerald-200/80">{tradeoff}</p>
         </div>
 
         <a

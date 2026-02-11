@@ -78,7 +78,7 @@ export default function Home() {
                 <div className="flex flex-col items-center justify-center py-24 text-center">
                   <div className="relative mb-6">
                     <div className="w-10 h-10 border-2 border-zinc-700 rounded-full" />
-                    <div className="absolute inset-0 w-10 h-10 border-2 border-amber-500/80 border-t-transparent rounded-full animate-spin" />
+                    <div className="absolute inset-0 w-10 h-10 border-2 border-emerald-400/80 border-t-transparent rounded-full animate-spin" />
                   </div>
                   <h2 className="text-sm font-medium text-zinc-400">
                     Analyzing options
@@ -112,8 +112,8 @@ export default function Home() {
                   </div>
 
                   {response.top3.length === 0 && (
-                    <div className="rounded-xl border border-amber-900/40 bg-amber-950/20 p-6">
-                      <h3 className="text-sm font-medium text-amber-200/90 mb-1">
+                    <div className="rounded-xl border border-emerald-900/40 bg-emerald-950/20 p-6">
+                      <h3 className="text-sm font-medium text-emerald-200/90 mb-1">
                         No matching products
                       </h3>
                       <p className="text-sm text-zinc-400">
@@ -170,7 +170,7 @@ export default function Home() {
                                     href={item.listing.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="hover:text-amber-400/90 transition-colors"
+                                    className="hover:text-emerald-400 transition-colors"
                                   >
                                     {item.listing.title.length > 60
                                       ? item.listing.title.slice(0, 60) + "…"
@@ -183,7 +183,7 @@ export default function Home() {
                                 <td className="px-4 py-3 text-right text-zinc-200 font-mono">
                                   ${item.listing.total_cost.toFixed(2)}
                                 </td>
-                                <td className="px-4 py-3 text-right text-amber-400/90 font-mono">
+                                <td className="px-4 py-3 text-right text-emerald-400 font-mono">
                                   {Math.round(item.total_score * 100)}
                                 </td>
                               </tr>
